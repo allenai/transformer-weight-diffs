@@ -29,6 +29,19 @@ To add a new model type to this script, you'll need to modify `model_constants.p
 - `MODELS_TO_LAYERS` will need to be updated with the number of layers for the model of the given size.
 - `MODELS_TO_STORE` will need to be updated with maps of the model config to the name of the weights stored in the model. An example is provided for T5, which uses both an encoder and a decoder.
 
+### Citation information
+
+If you use this repo for a publication, please cite:
+
+```
+@inproceedings{Da2021FEWSHOTKMS,
+  title={Analyzing Commonsense Emergence in Few-shot Knowledge Models},
+  author={Jeff Da and Ronan Le Bras and Ximing Lu and Yejin Choi and Antoine Bosselut},
+  booktitle={AKBC},
+  year={2021}
+}
+```
+
 ### Notes
 
 - For public inquiries, please create a GitHub issue with questions and suggestions. We suggest that you create a pull request instead of an issue for fixes and updates.
