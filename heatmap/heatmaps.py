@@ -56,20 +56,8 @@ def get_s_l(filename):
                     largest = max(i, largest)
                     smallest = min(i, smallest)
     return smallest, largest
-    
-names = ['calculated_values.tsv']
-names_new = []
-for n in names:
-    names_new.append(n)
-    names_new.append(n.replace('decoder', 'encoder'))
-names = names_new
 
-names_new = []
-for n in names:
-    names_new.append(n)
-    names_new.append(n.replace('l1', 'cossim').replace('.tsv', '_new.tsv'))
-
-names = names_new
+filenames = ["l1_decoder_t5.tsv", "l1_encoder_t5.tsv"]
 
 for j, name in enumerate(names):
     matrix, labels = load(name)
