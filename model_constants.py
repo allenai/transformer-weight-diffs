@@ -21,16 +21,12 @@ T5_DECODER_STORE = {
 }
 
 MODELS_TO_STORE = {
-    "t5": {
+    "t5-large": {
         "encoder": T5_ENCODER_STORE,
         "decoder": T5_DECODER_STORE
     }
 }
 
 MODELS_TO_LAYERS = {
-    "t5": {
-        "large": 24,
-        "small": 6,
-        "11b": 24
-    }
+    "t5-large": 24
 }

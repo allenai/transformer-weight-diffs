@@ -9,30 +9,29 @@ import argparse
 from utils import sim_matrix, process_results, get_norm, get_models
 from get_state import get_state_dict
 
-def run_difference_calculation(model_folder="t5-large", model_name="t5-large", function_type="l1"):
-    assert model_name in MODELS_TO_STORE, f"{model_name} is not one of the following implemented models: {MODELS_TO_STORE.keys()}"
-    
+def run_difference_calculation(model_folder="t5-large", model_name="t5-large", function_type="l1"):    
     dirname = model_folder
     results_decoder = defaultdict(list)
     model, config = get_models(model_folder, model_name)
-    org_model, org_config = get_models(model_name)
+    org_model, org_config = get_models(model_name, model_name)
 
     org_dict = org_model.state_dict()
     trained_dict = model.state_dict()
 
     if model_name in MODELS_TO_STORE:
         model_name, model_size = model_name.split('-')
-        model_dict = MODELS_TO_LAYERS[model_name]
+        model_dict = MODELS_TO_STORE
         size = MODELS_TO_LAYERS[model_name][model_size]
     else:
-        size, model_dict = get_state_dict(model_name)
+        size, model_dict = get_state_dict(model, model_name)
+        size = size[model_name]
 
-    if any(['encoder' in state for state in model_dict]):
+    if "encoder" in model_dict[model_name]:
         table_file_encoder = open(f'{function_type}_encoder_{model_name}.tsv', 'w')
         results_encoder = defaultdict(list)
         for encoder_n in range(size):
-            for dict_key in MODELS_TO_STORE[model_name][encoder]:
-                dict_names = MODELS_TO_STORE[model_name][encoder]
+            for dict_key in model_dict[model_name]["encoder"]:
+                dict_names = model_dict[model_name]["encoder"]
                 q_org = org_dict[dict_names[dict_key].format(encoder_n)]
                 q_new = trained_dict[dict_names[dict_key].format(encoder_n)]
                 if function_type == "l1":
@@ -45,12 +44,12 @@ def run_difference_calculation(model_folder="t5-large", model_name="t5-large", f
             st = "\t".join([str(float(f.item())) for f in results_encoder[item]])
             table_file_encoder.write(f'{item}\t{st}\n')
     
-    if any(['decoder' in state for state in model_dict]):
+    if "decoder" in model_dict[model_name]:       
         table_file_decoder = open(f'{function_type}_decoder_{model_name}.tsv', 'w')
         results_decoder = defaultdict(list)
         for decoder_n in range(size):
-            for dict_key in MODELS_TO_STORE[model_name][encoder]:
-                dict_names = MODELS_TO_STORE[model_name][encoder]
+            for dict_key in model_dict[model_name]["decoder"]:
+                dict_names = model_dict[model_name]["decoder"]
                 q_org = org_dict[dict_names[dict_key].format(decoder_n)]
                 q_new = trained_dict[dict_names[dict_key].format(decoder_n)]
                 results_decoder[dict_key].append(get_norm(q_org - q_new, 1))

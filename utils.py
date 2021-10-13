@@ -1,5 +1,4 @@
-from transformers import T5ForConditionalGeneration
-from transformers import T5Config
+from transformers import T5Config, AutoModel, AutoConfig, T5ForConditionalGeneration
 from torch import linalg as LA
 import torch
 from collections import defaultdict
@@ -21,7 +20,11 @@ def get_norm(mat, n=None):
     return torch.tensor(LA.norm(mat, n).item())
 
 def get_models(model_folder, model_name):
-    if model_name == 't5':
+    if model_name == 't5-large':
         config = T5Config.from_pretrained(model_folder)
         model = T5ForConditionalGeneration.from_pretrained(model_folder, config=config)
+        return model, config
+    else:
+        config = AutoConfig.from_pretrained(model_folder)
+        model = AutoModel.from_pretrained(model_folder, config=config)
         return model, config
