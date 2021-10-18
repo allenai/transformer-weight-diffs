@@ -16,19 +16,19 @@ The following is an example of getting difference calculation running for a T5-C
 
 (1) Place a model folder in a local directory, for example, in `./fine-tuned-t5`
 
-(2) Run `calculate_differences.py` with appropriate parameters:
+(2) Run `python calculate_differences.py` with appropriate parameters:
 
-- `calculate_differences.py --model_name t5-large --model_folder t5-large --function_type l1`
+- `python calculate_differences.py --model_name t5-large --model_folder t5-large --function_type l1`
 
-(likely, replace `--model_folder t5` with the location of your fine-tuned weights)
+Likely, replace `--model_folder t5` ith the location of your fine-tuned weights.
 
 (3) (Optional) Create a heatmap with the weights produced from the model, for example, using `heatmap/heatmaps.py`
 
 (Runtime) The runtime for calculating weights is, on Quadro RTX 8000: 
 
-`t5-large`: 
+`t5-large`: 1m 17s
 
-`t5-11b`:
+`t5-11b`: ~37m
 
 ### Adding your own model
 
