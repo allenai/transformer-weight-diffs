@@ -1,4 +1,4 @@
 pytorch-lightning==0.8.1
 matplotlib
 transformers==3.0.2
-torch==1.5.1
+torch==1.7.1

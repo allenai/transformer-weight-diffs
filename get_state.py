@@ -25,10 +25,7 @@ def get_state_dict(model, model_name=None):
         layers.add(layer_n)
     
     # create state dict
-    models_to_store = {
-        model_name: {
-        }
-    }
+    models_to_store = { model_name: {} }
     if any(['encoder' in state for state in state_list]):
         models_to_store[model_name]["encoder"] = encoder_dict
     if any(['decoder' in state for state in state_list]):

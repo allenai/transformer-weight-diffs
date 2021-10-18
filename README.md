@@ -18,13 +18,23 @@ The following is an example of getting difference calculation running for a T5-C
 
 (2) Run `calculate_differences.py` with appropriate parameters:
 
-- `calculate_differences.py --model_name t5 --model_folder ./fine-tuned-t5 --model_size large --function_type l1`
+- `calculate_differences.py --model_name t5-large --model_folder t5-large --function_type l1`
+
+(likely, replace `--model_folder t5` with the location of your fine-tuned weights)
 
 (3) (Optional) Create a heatmap with the weights produced from the model, for example, using `heatmap/heatmaps.py`
+
+(Runtime) The runtime for calculating weights is, on Quadro RTX 8000: 
+
+`t5-large`: 
+
+`t5-11b`:
 
 ### Adding your own model
 
 To add a new model type to this script, you'll need to modify `model_constants.py` with the information for your model.
+
+We also have an automatic function that will attempt to parse the weight dict and fill in the model if the model name is not in `model_constants.py`.
 
 - `MODELS_TO_LAYERS` will need to be updated with the number of layers for the model of the given size.
 - `MODELS_TO_STORE` will need to be updated with maps of the model config to the name of the weights stored in the model. An example is provided for T5, which uses both an encoder and a decoder.
