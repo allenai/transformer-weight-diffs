@@ -6,9 +6,15 @@ from collections import defaultdict
 import math
 from model_constants import MODELS_TO_STORE, MODELS_TO_LAYERS
 import argparse
-from utils import sim_matrix, process_results, get_norm, get_models
+from utils import sim_matrix, get_norm, get_models
 from get_state import get_state_dict
 
+"""
+Calculates weight differences between a fine-tuned model and the pretrained model.
+model_folder: folder of fine-tuned model
+model_name: name of pretrained model to load from HuggingFace
+function_type: difference calculation type (l1 or cossim)
+"""
 def run_difference_calculation(model_folder="t5-large", model_name="t5-large", function_type="l1"):    
     dirname = model_folder
     results_decoder = defaultdict(list)
@@ -38,7 +44,6 @@ def run_difference_calculation(model_folder="t5-large", model_name="t5-large", f
                     results_encoder[dict_key].append(get_norm(q_org - q_new, 1))
                 if function_type == "cossim":
                     results_encoder[dict_key].append(sim_matrix(v_org, v_new))
-        process_results(results_encoder)
 
         for item in results_encoder:
             st = "\t".join([str(float(f.item())) for f in results_encoder[item]])
@@ -57,7 +62,6 @@ def run_difference_calculation(model_folder="t5-large", model_name="t5-large", f
                     results_encoder[dict_key].append(get_norm(q_org - q_new, 1))
                 if function_type == "cossim":
                     results_encoder[dict_key].append(sim_matrix(v_org, v_new))
-        process_results(results_decoder)
 
         for item in results_decoder:
             st = "\t".join([str(float(f.item())) for f in results_decoder[item]])

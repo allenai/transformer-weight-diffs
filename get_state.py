@@ -1,11 +1,24 @@
 from transformers import AutoModel
 import re
 
+"""
+Helper methods to automatically create state dictionaries.
+"""
+
+"""
+Returns the layer id and formatted state name in the given HuggingFace state dictionary name.
+name: name of dict from HuggingFace
+"""
 def replace_layer(name):
     layer_n = re.search('[0-9]+', name).group()
     return layer_n, name.replace(layer_n, '{}', 1)
 
-def get_state_dict(model, model_name=None):
+"""
+Automatically gets the state dict from the given HuggingFace model.
+model: loaded HuggingFace model
+model_name: name of model to store in state dict
+"""
+def get_state_dict(model, model_name):
     state_dict = model.state_dict()
     state_list = set()
     layers = set()

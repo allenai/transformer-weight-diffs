@@ -1,3 +1,7 @@
+"""
+Example constants for a T5 state dict.
+"""
+
 T5_ENCODER_STORE = {
     "q": 'encoder.block.{}.layer.0.SelfAttention.q.weight',
     "k": 'encoder.block.{}.layer.0.SelfAttention.k.weight',
